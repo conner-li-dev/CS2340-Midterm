@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col mx-auto mb-3">
+                <h2>Review</h2>
+                <hr>
+                {% with template_data.review as review %}
+                <div class="card shadow p-3 mb-4 rounded">
+                    <div class="card-title">
+                        <b>{{ review.user.username }}</b>
+                        <h6 class="card-subtitle mt-1 mb-2 text-muted">
+                            {{ review.date }}
+                        </h6>
+                    </div>
+                    <p class="card-text">
+                        {{ review.comment }}
+                    </p>
+                </div>
+                {% endwith %}
+                <h2>Write a Report</h2>
+                <hr>
+                <div class="card shadow p-3 mb-34 rounded">
+                    <div class="card-body">
+                        <h3>Report</h3>
+                        <br>
+                        <form method="POST" action="{% url 'movies.report_review' id=template_data.movie.id review_id=template_data.review.id %}">
+                            {% csrf_token %}
+                            <p>
+                                <label for="reason">Reason</label>
+                                <textarea name="reason" required class="form-control" id="reason"></textarea>
+                            </p>
+                            <button class="btn bg-dark text-white" type="submit">
+                                Submit Report
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

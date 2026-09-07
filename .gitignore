@@ -1,0 +1,19 @@
+# General Output Files
+out/
+build/
+dist/
+
+
+.idea/
+*.zip
+
+# ---------- Python ---------- #
+# Virtual Environments
+.venv/
+venv/
+
+# Cache/Output Files
+__pycache__/
+*.egg-info/
+*.pyc
+
