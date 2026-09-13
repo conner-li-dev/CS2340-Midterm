@@ -1,5 +1,3 @@
-from re import L
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -24,13 +22,17 @@ def index(request):
 def show(request, id):
     movie = Movie.objects.get(id=id)
     reviews = Review.objects.filter(movie=movie)
-    reports = Report.objects.filter(review__in=reviews, user=request.user)
+    
+    if request.user.is_authenticated:
+        reports = Report.objects.filter(review__in=reviews, user=request.user)
 
-    reported_reviews = [report.review for report in reports]
-    shown_reviews = []
-    for review in reviews:
-        if review not in reported_reviews:
-            shown_reviews.append(review)
+        reported_reviews = [report.review for report in reports]
+        shown_reviews = []
+        for review in reviews:
+            if review not in reported_reviews:
+                shown_reviews.append(review)
+    else:
+        shown_reviews = reviews
 
     template_data = {}
     template_data['title'] = movie.name
