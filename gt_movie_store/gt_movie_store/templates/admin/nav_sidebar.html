@@ -7,15 +7,15 @@
     {% include 'admin/app_list.html' with app_list=available_apps show_changelinks=False %}
     
     <!-- Insert a admin nav tabs here -->
-    <div class="module">
+    <div class="module {% if request.path|slice:":17" == '/admin/engagement' %}current-app{% endif %}">
         <table style="width: 100%;">
             <caption>
-                <a href="/admin/movies/" class="section" title="Tools for tracking user engagement">Engagement</a>
+                <a href="/admin/" class="section" title="Tools for tracking user engagement">Engagement</a>
             </caption>
             <tbody>
                 <tr>
                     <th scope="row">
-                        <a href="">Highest Purchasing User</a>
+                        <a href="{% url 'cart_engagement_admin:engagement.most_purchased' %}">Highest Purchasing User</a>
                     </th>
                 </tr>
             </tbody>

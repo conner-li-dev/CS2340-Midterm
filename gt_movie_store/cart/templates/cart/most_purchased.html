@@ -1,0 +1,16 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Purchase Amount</th>
+        </tr>
+        <tr>
+            <th>{{ user }}</th>
+            <th>{{ purchase_count }}</th>
+        </tr>
+    </table>
+</div>
+{% endblock content %}

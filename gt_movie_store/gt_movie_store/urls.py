@@ -19,12 +19,17 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
 
+from cart.admin import cart_engagement_admin_site
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('movies/', include('movies.urls')),
     path('accounts/', include('accounts.urls')),
     path('cart/', include('cart.urls')),
+
+    # admin stuff
+    path('admin/engagement/', include((cart_engagement_admin_site.get_urls(), 'cart_engagement_admin'), namespace='cart_engagement_admin')),
+    path('admin/', include((admin.site.get_urls(), 'admin'), namespace='admin')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
