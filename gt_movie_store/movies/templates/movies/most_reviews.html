@@ -1,0 +1,16 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Number of reviews</th>
+        </tr>
+        <tr>
+            <th>{{ highest_review_count_user }}</th>
+            <th>{{ review_count }}</th>
+        </tr>
+    </table>
+</div>
+{% endblock content %}
