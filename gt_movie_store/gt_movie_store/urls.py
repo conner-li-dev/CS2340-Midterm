@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from cart.admin import cart_engagement_admin_site
+from movies.admin import review_engagement_admin_site
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -29,6 +30,7 @@ urlpatterns = [
 
     # admin stuff
     path('admin/engagement/', include((cart_engagement_admin_site.get_urls(), 'cart_engagement_admin'), namespace='cart_engagement_admin')),
+    path('admin/reviews-engagement/', include((review_engagement_admin_site.get_urls(), 'reviews_engagement_admin'), namespace='reviews_engagement_admin')),
     path('admin/', include((admin.site.get_urls(), 'admin'), namespace='admin')),
 ]
 
