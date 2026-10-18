@@ -9,6 +9,9 @@ dist/
 
 *.sqlite3
 
+# User-uploaded media (images already committed stay tracked)
+gt_movie_store/media/
+
 # ---------- Python ---------- #
 # Virtual Environments
 .venv/

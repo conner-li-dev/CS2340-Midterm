@@ -1,0 +1,14 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<form method="get">
+    <input type ="number" name ="size" min = "1">
+    <input type = "submit" value = "Apply">
+</form>
+<table>
+    <tr><th>Name</th><th>Number of Purchases</th></tr>
+    {% for u in top_users %}
+    <tr><td>{{u.username}}</td><td>{{u.purchase_count|default:0}}</td></tr>
+    {% endfor %}
+</table>
+{% endblock content %}
