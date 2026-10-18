@@ -1,7 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Avg
+from django.views.decorators.http import require_POST
 
-from .models import Movie, Report, Review
+from .models import Movie, Report, Review, Rating
+from .forms import RatingForm
+
 
 def index(request):
     search_term = request.GET.get('search')
@@ -19,11 +23,23 @@ def index(request):
         {'template_data': template_data},
     )
 
-def show(request, id):
+def show(request, id, rating_form = None):
     movie = Movie.objects.get(id=id)
     reviews = Review.objects.filter(movie=movie)
+
+    user_rating = None
+
     
     if request.user.is_authenticated:
+        user_rating = Rating.objects.filter(
+            movie = movie,
+            user = request.user,
+        ).first()
+
+        if rating_form is None:
+            rating_form = RatingForm(initial =
+            {"score" : user_rating.stars} if user_rating else {})
+
         reports = Report.objects.filter(review__in=reviews, user=request.user)
 
         reported_reviews = [report.review for report in reports]
@@ -34,7 +50,14 @@ def show(request, id):
     else:
         shown_reviews = reviews
 
+    average_rating = Rating.objects.filter(movie = movie).aggregate(
+                average = Avg("stars"))["average"]
+    
     template_data = {}
+
+    template_data["rating_form"] = rating_form
+    template_data["average_rating"] = average_rating
+    template_data["user_rating"] = user_rating
     template_data['title'] = movie.name
     template_data['movie'] = movie
     template_data['reviews'] = shown_reviews 
@@ -102,4 +125,23 @@ def report_review(request, id, review_id):
         report.save()
 
     return redirect('movies.show', id=id)
+
+@login_required
+@require_POST
+def rate_movie(request, id):
+    movie = get_object_or_404(Movie, id=id)
+    form = RatingForm(request.POST)
+
+    if (not form.is_valid()):
+        return show(request, id, rating_form = form)
+
+    Rating.objects.update_or_create(
+        user = request.user,
+        movie = movie,
+        defaults= {"stars" : form.cleaned_data["score"]},
+    )
+
+    return redirect("movies.show", id=id)
+
+    
 

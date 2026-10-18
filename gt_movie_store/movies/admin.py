@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Movie, Review, Report
-from django.contrib import admin
+
+from .models import Movie,Rating, Review, Report
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import path
+from .models import Movie, Rating, Review, Report
 
 class MovieAdmin(admin.ModelAdmin):
     ordering = ['name']
@@ -13,6 +14,7 @@ class MovieAdmin(admin.ModelAdmin):
 admin.site.register(Movie, MovieAdmin)
 admin.site.register(Review)
 admin.site.register(Report)
+
 
 from typing import override
 
@@ -50,3 +52,4 @@ class ReviewEngagementAdminSite(admin.AdminSite):
         return render(request, 'movies/most_reviews.html', template_data)
 
 review_engagement_admin_site = ReviewEngagementAdminSite(name="reviews_engagement_admin")
+admin.site.register(Rating)
