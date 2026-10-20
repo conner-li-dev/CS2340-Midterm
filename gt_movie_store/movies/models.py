@@ -10,6 +10,8 @@ class Movie(models.Model):
     price = models.IntegerField()
     description = models.TextField()
     image = models.ImageField(upload_to='movie_images/')
+    review_count = models.IntegerField()
+    purchase_count = models.IntegerField()
 
     @override
     def __str__(self):

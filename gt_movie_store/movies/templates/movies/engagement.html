@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<h2>Most Purchased Movie</h2>
+<hr>
+<p>
+    <b>Movie:</b><br>
+    {% for movie in most_purchased %}
+    {{ movie }}<br>
+    {% endfor %}
+</p>
+<p>
+    <b>Amount of purchases:</b>
+    {{ purchase_amount }}
+</p>
+<h2>Most Reviewed Movie</h2>
+<hr>
+<p>
+    <b>Movie:</b><br>
+    {% for movie in most_reviewed %}
+    {{ movie }}<br>
+    {% endfor %}
+</p>
+<p>
+    <b>Amount of reviews:</b>
+    {{ review_amount }}
+</p>
+
+{% endblock %}

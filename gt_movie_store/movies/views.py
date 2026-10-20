@@ -76,6 +76,8 @@ def create_review(request, id):
         review.movie = movie
         review.user = request.user
         review.save()
+        movie.review_count = movie.review_count + 1
+        movie.save()
     return redirect('movies.show', id=id)
 
 @login_required
@@ -102,6 +104,9 @@ def edit_review(request, id, review_id):
 def delete_review(request, id, review_id):
     review = get_object_or_404(Review, id=review_id, user=request.user)
     review.delete()
+    movie = Movie.objects.get(id=id)
+    movie.review_count = movie.review_count - 1
+    movie.save()
     return redirect('movies.show', id=id)
 
 @login_required
@@ -142,6 +147,3 @@ def rate_movie(request, id):
     )
 
     return redirect("movies.show", id=id)
-
-    
-
