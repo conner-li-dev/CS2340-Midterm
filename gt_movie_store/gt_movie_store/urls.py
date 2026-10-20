@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from cart.admin import cart_engagement_admin_site
+from movies.admin import movie_engagement_admin_site
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -29,7 +30,11 @@ urlpatterns = [
 
     # admin stuff
     path('admin/engagement/', include((cart_engagement_admin_site.get_urls(), 'cart_engagement_admin'), namespace='cart_engagement_admin')),
+    path('admin/movie-engagement/', include((movie_engagement_admin_site.get_urls(), 'movie_engagement_admin_site'),namespace='movie_engagement_admin_site')),
     path('admin/', include((admin.site.get_urls(), 'admin'), namespace='admin')),
+
+
+    #path('admin/review_stats', include((review_stats_admin_site.get_urls(), 'review_stats'), namespace = 'review_stats_admin')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

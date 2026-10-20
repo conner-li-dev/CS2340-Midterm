@@ -9,6 +9,9 @@ class Movie(models.Model):
     price = models.IntegerField()
     description = models.TextField()
     image = models.ImageField(upload_to='movie_images/')
+    review_count = models.IntegerField()
+    purchase_count = models.IntegerField()
+    
     
     @override
     def __str__(self):
@@ -20,6 +23,7 @@ class Review(models.Model):
     date = models.DateField(auto_now_add=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     
     @override
     def __str__(self):
@@ -35,4 +39,3 @@ class Report(models.Model):
     @override
     def __str__(self) -> str:
         return str(self.id) + ' - ' + self.user.username
-

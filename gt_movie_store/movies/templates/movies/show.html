@@ -15,6 +15,14 @@
                     <b>Price:</b>
                     {{ template_data.movie.price }}
                 </p>
+                <p>
+                    <b>Purchase Count:</b>
+                    {{ template_data.movie.purchase_count }}
+                </p>
+                <p>
+                    <b>Review Count:</b>
+                    {{ template_data.movie.review_count }}
+                </p>
                 <p class="card-text">
                     <form method="POST" action="{% url 'cart.add' id=template_data.movie.id %}">
                         <div class="row">
